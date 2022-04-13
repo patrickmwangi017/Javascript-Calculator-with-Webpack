@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+<body>
+    <section>
+        <div class="container">
+            <h1>JavaScript Calculator</h1>
+            <!-- value to display result and clicked button value -->
+            <div id="display"></div>
+            <!-- buttons for operators and numbers -->
+                <div class="buttons">
+                    <div class="button">C</div>
+                    <div class="button">/</div>
+                    <div class="button">*</div>
+                    <div class="button">&larr;</div>
+                    <div class="button">7</div>
+                    <div class="button">8</div>
+                    <div class="button">9</div>
+                    <div class="button">-</div>
+                    <div class="button">4</div>
+                    <div class="button">5</div>
+                    <div class="button">6</div>
+                    <div class="button">+</div>
+                    <div class="button">1</div>
+                    <div class="button">2</div>
+                    <div class="button">3</div>
+                    <div class="button">.</div>
+                    <div class="button">(</div>
+                    <div class="button">0</div>
+                    <div class="button">)</div>
+                    <div id="equal" class="button">=</div>
+                </div>
+        </div>
+    </section>
+</body>
+<script>
+
+//  save a reference to display element
+let display = document.getElementById('display');
+
+// store button references in array
+// from is used to convert returned node collection to array
+let buttons = Array.from(document.getElementsByClassName('button'));
+
+/* add event listeners to buttons by mapping through the array and 
+   adding a click event listener to each 
+ */
+buttons.map( button => {
+    button.addEventListener('click', (e) => {
+
+        // get label of clicked button
+        switch(e.target.innerText){
+
+            // clear display oc button clicked is C
+            case 'C':
+                display.innerText = '';
+                break;
+
+            // use eval to evaluate and display the result if equals is clicked
+            case '=':
+                try{
+                    display.innerText = eval(display.innerText);
+                    alert("The Result obtained is " + " " + eval(display.innerText))
+                } catch {
+
+                    // Erros can happen when we have syntactically wrong math expressions
+                    display.innerText = "Error"
+                }
+                break;
+
+                // remove the last character from the display's innerText if back arrow is clicked
+            case '←':
+                if (display.innerText){
+                   display.innerText = display.innerText.slice(0, -1);
+                }
+                break;
+
+            // append the clicked button's innerText to the display's innerText
+            //  whenever the user don't hit any of the special symbols
+            default:
+                display.innerText += e.target.innerText;
+        }
+    });
+});
+</script>
+</html>
